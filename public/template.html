@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Order</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 100px;
+      border-bottom: 1px solid black;
+    }
+
+    img {
+      width: 50%;
+    }
+
+    h1 {
+      font-size: 18px;
+      text-align: center;
+    }
+
+    small,
+    b {
+      font-size: 14px;
+    }
+
+    b {
+      text-decoration-line: underline;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .info-1 {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .info-2 {
+      padding: 10px 0px;
+      border-top: 1px dashed black;
+      border-bottom: 1px dashed black;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Стили для таблицы */
+    table {
+      margin: 5px 0px;
+      text-align: center;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      font-size: 14px;
+      padding: 2px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .total {
+      width: 100%;
+      border-top: 1px solid black;
+      padding: 10px 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .icon {
+      width: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <img src="http://localhost:3000/images/logo.svg" alt="Logo" alt="">
+
+  <br>
+
+  <h1>Стол №3</h1>
+
+  <br>
+
+  <span class="info-1">
+
+    <span class="column">
+      <small>Смена</small>
+      <b>17/04/2023</b>
+    </span>
+
+    <span class="column">
+      <small>Время открытия:</small>
+      <b>15:27</b>
+    </span>
+
+  </span>
+
+  <span class="info-2">
+
+
+    <b>Baltika</b>
+
+    <span class="row">
+      <small>Официант: &nbsp;&nbsp;</small>
+      <b>Отсуствует</b>
+    </span>
+
+    <span class="row">
+      <small>Оплата: &nbsp;&nbsp;</small>
+      <b>Наличные</b>
+    </span>
+
+  </span>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Позиция</th>
+        <th>Цена</th>
+        <th>Кол-во</th>
+        <th>Итого</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#order}}
+      <tr>
+        <td>{{name}}</td>
+        <td>{{cost}}</td>
+        <td>{{quantity}}</td>
+        <td>{{total_cost}}</td>
+      </tr>
+      {{/order}}
+    </tbody>
+  </table>
+
+  <span class="total">
+    <b>К оплате: 55 лей</b>
+  </span>
+
+  <span class="info-2">
+
+    <span class="row">
+      <img src="http://localhost:3000/images/instagram.svg" class="icon">
+      &nbsp;&nbsp;
+      <small>baltika_cafe_bar</small>
+    </span>
+
+    <span class="row">
+      <img src="http://localhost:3000/images/phone.svg" class="icon">
+      &nbsp;&nbsp;
+      <small>+373 60176601</small>
+    </span>
+
+    <span class="row">
+      <img src="http://localhost:3000/images/location.svg" class="icon">
+      &nbsp;&nbsp;
+      <small>г. Чадыр-Лунга, ул. Проездная 11/2</small>
+    </span>
+
+    <span class="row">
+      <b>MENU:</b>
+      &nbsp;&nbsp;
+      <small>www.baltika.md</small>
+    </span>
+
+  </span>
+
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+{
+    "name": "printer-server-baltika",
+    "version": "1.0.0",
+    "description": "Server for printers.",
+    "main": "index.js",
+    "scripts": {
+        "server": "nodemon index.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "fs": "^0.0.1-security",
+        "iconv-lite": "^0.6.3",
+        "moment": "^2.29.4",
+        "morgan": "^1.10.0",
+        "mustache": "^4.2.0",
+        "pdf-to-printer": "^5.6.0",
+        "printer": "^0.4.0",
+        "puppeteer": "^19.9.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
+}
