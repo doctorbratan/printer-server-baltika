@@ -9,6 +9,33 @@ const iconv = require('iconv-lite');
 
 const errorHandler = require('./utils/errorHandler');
 
+module.exports.get = async (req, res) => {
+    try {
+
+        const printers = printer.getPrinters();
+        res.status(200).json(printers)
+
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.findOne = async (req, res) => {
+    try {
+        
+        const printers = printer.getPrinters();
+        const candidate = printers.find( (printer) => printer.name === req.params.name )
+        if (candidate) {
+            res.status(200).json(true)
+        } else {
+            res.status(500).json(false)
+        }
+        
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
 
 module.exports.order = async (req, res) => {
 
@@ -17,11 +44,9 @@ module.exports.order = async (req, res) => {
         let code = 201
         let response = true
 
-        const order = [
-            { name: 'Ранчо', cost: 10, quantity: 2, total_cost: 20 },
-            { name: 'Пиво', cost: 20, quantity: 1, total_cost: 20 },
-            { name: 'Соус', cost: 5, quantity: 3, total_cost: 15 }
-        ];
+        const order = req.body.order
+        order.start = moment(order.start).format("HH:mm");
+        order.shift = moment(`${order.shift}T00:00:00`).format("DD/MM/YY")
 
         const filename = moment().format().replace(/:/g, '-');
 
@@ -39,13 +64,13 @@ module.exports.order = async (req, res) => {
         await page.goto(`http://localhost:3000/html/${filename}.html`, { waitUntil: 'networkidle0' });
         // Установите параметры страницы в миллиметрах: 80 x 297 мм
         await page.setViewport({
-            width: Math.round(80 * 2.83465), // 226.77 пунктов
-            height: Math.round(297 * 2.83465), // 841.89 пунктов
+            width: Math.round(+req.body.printer.width * 2.83465), // 226.77 пунктов
+            height: Math.round(+req.body.printer.height * 2.83465), // 841.89 пунктов
         });
 
         const pdfOptions = {
-            width: '80mm',
-            height: '297mm',
+            width: `${req.body.printer.width}mm`,
+            height: `${req.body.printer.height}mm`,
             printBackground: true,
         };
 
@@ -58,7 +83,7 @@ module.exports.order = async (req, res) => {
 
         // Печать PDF
         pdf_printer.print(PDFPath, {
-            printer: '80mm Series Printer',
+            printer: req.body.printer.name,
             success: function (jobID) {
                 console.log("Успешно отправлено на печать. Job ID: " + jobID);
             },
@@ -93,7 +118,7 @@ module.exports.task = async (req, res) => {
 
         printer.printDirect({
             data: encodedData,
-            printer: '80mm Series Printer',
+            printer: req.body.printer,
             type: 'TEXT',
             success: function (jobID) {
                 console.log('Текст отправлен на печать. Job ID:', jobID);

@@ -72,7 +72,7 @@
     td {
       font-size: 14px;
       padding: 2px;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid black;
     }
 
     th {
@@ -81,7 +81,6 @@
 
     .total {
       width: 100%;
-      border-top: 1px solid black;
       padding: 10px 0px;
       display: flex;
       flex-direction: column;
@@ -99,7 +98,7 @@
 
   <br>
 
-  <h1>Стол №3</h1>
+  <h1>{{order.order_for.name}}</h1>
 
   <br>
 
@@ -107,12 +106,12 @@
 
     <span class="column">
       <small>Смена</small>
-      <b>17/04/2023</b>
+      <b>{{order.shift}}</b>
     </span>
 
     <span class="column">
       <small>Время открытия:</small>
-      <b>15:27</b>
+      <b>{{order.start}}</b>
     </span>
 
   </span>
@@ -120,16 +119,16 @@
   <span class="info-2">
 
 
-    <b>Baltika</b>
+    <b>{{order.customer.name}}</b>
 
     <span class="row">
       <small>Официант: &nbsp;&nbsp;</small>
-      <b>Отсуствует</b>
+      <b>{{order.seller.name}}</b>
     </span>
 
     <span class="row">
       <small>Оплата: &nbsp;&nbsp;</small>
-      <b>Наличные</b>
+      <b>{{order.payment}}</b>
     </span>
 
   </span>
@@ -144,21 +143,23 @@
       </tr>
     </thead>
     <tbody>
-      {{#order}}
+      {{#order.list}}
       <tr>
-        <td>{{name}}</td>
+        <td>[ {{category.name}} ] {{name}}</td>
         <td>{{cost}}</td>
         <td>{{quantity}}</td>
-        <td>{{total_cost}}</td>
+        <td>{{total}}</td>
       </tr>
-      {{/order}}
+      {{/order.list}}
     </tbody>
   </table>
-
   <span class="total">
-    <b>К оплате: 55 лей</b>
+    {{#order.salle}}
+      <b>Итого: {{order.total}} лей</b>
+      <b>Скидка: {{order.salle}} %</b>
+    {{/order.salle}}
+    <b>К оплате: {{order.total_price}} лей</b>
   </span>
-
   <span class="info-2">
 
     <span class="row">
